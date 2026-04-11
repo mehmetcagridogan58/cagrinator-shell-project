@@ -9,11 +9,11 @@
     char **args;    
     int status;
 
-    char lsh_read_line() {
+    char *lsh_read_line() {
 
     }
 
-    char lsh_parse_line() {
+    char **lsh_parse_line() {
 
     } 
 
