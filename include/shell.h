@@ -9,6 +9,14 @@
     char **args;
     int status;
 
+//
+//    READ FUNCTIOMALITY:
+//    This part of the code should work as:
+//    1) read input from user
+//    1-1) if EOF insert \0
+//    2) if input exceeds buffer size reallocate by 1024
+//
+
     #define LSH_RL_BUFFSIZE 1024
     char *lsh_read_line() {
         int position = 0;
