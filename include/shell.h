@@ -13,7 +13,7 @@
     char *lsh_read_line() {
         int position = 0;
         int buffsize = LSH_RL_BUFFSIZE;
-        char *buffer = malloc(sizeof(char), buffsize);
+        char *buffer = malloc(sizeof(char) * buffsize);
         int c;
 
         if(!buffer) {

@@ -6,8 +6,8 @@ int lsh_loop() {
         printf(">");
 
         line = lsh_read_line();
-        args = lsh_parse_line();
-        status = lsh_execute_line();
+        args = lsh_parse_line(line);
+        status = lsh_execute_line(args);
 
         free(line);
         free(args);
