@@ -8,18 +8,18 @@
     char *line;
     char **args;
     int status;
-
+    int position; // POSITION VAR: its a special variable, position is used througout by the reader and parser.
 //
 //    READ FUNCTIOMALITY:
 //    This part of the code should work as:
-//    1) read input from user
-//    1-1) if EOF insert \0
-//    2) if input exceeds buffer size reallocate by 1024
+//    1. read input from user
+//    1-1. if EOF insert \0
+//    2. if input exceeds buffer size reallocate by 1024
 //
 
     #define LSH_RL_BUFFSIZE 1024
     char *lsh_read_line() {
-        int position = 0;
+        position = 0;
         int buffsize = LSH_RL_BUFFSIZE;
         char *buffer = malloc(sizeof(char) * buffsize);
         int c;
@@ -52,11 +52,39 @@
         }        
     }
 }
+//
+//      PARSING AND LEXING FUNCTIONALITY
+//      
     #define LSH_TOKEN_BUFFSIZE 64
     #define LSH_TOKEN_DELIM " \t\r\n\a"
-    char **lsh_parse_line() {
+    char **lsh_parse_line(char* line) {
+        position = 0;
+        int buffsize = LSH_TOKEN_BUFFSIZE;
+        char** tokens = malloc(buffsize * sizeof(char*));
+        char* token;
 
-    } 
+        if (!tokens) {
+            fprintf(stderr, "lsh_ allocation error");
+            exit(EXIT_FAILURE);
+        }
+
+        token = strtok(line, LSH_TOKEN_DELIM);
+        while(token =! NULL) {
+            tokens[position] = token;
+            position++;
+            if (position >= buffsize) {
+                buffsize += LSH_TOKEN_BUFFSIZE;
+                tokens = realloc(tokens, buffsize * sizeof(char*));
+                if (!tokens) {
+                    printf("lsh: allocation error");
+                    exit(EXIT_FAILURE);
+                }
+            }
+            tokens = strtok(NULL, LSH_TOKEN_DELIM);
+        }
+        tokens[position] = NULL;
+        return tokens;
+    }
 
     int lsh_execute_line() {
 
