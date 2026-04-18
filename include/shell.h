@@ -16,9 +16,8 @@
 //    1-1. if EOF insert \0
 //    2. if input exceeds buffer size reallocate by 1024
 //
-
     #define LSH_RL_BUFFSIZE 1024
-    char *lsh_read_line() {
+    char *lsh_read_line(void) {
         position = 0;
         int buffsize = LSH_RL_BUFFSIZE;
         char *buffer = malloc(sizeof(char) * buffsize);
@@ -57,7 +56,7 @@
 //      
     #define LSH_TOKEN_BUFFSIZE 64
     #define LSH_TOKEN_DELIM " \t\r\n\a"
-    char **lsh_parse_line(char* line) {
+    char **lsh_parse_line(char *line) {
         position = 0;
         int buffsize = LSH_TOKEN_BUFFSIZE;
         char** tokens = malloc(buffsize * sizeof(char*));
@@ -85,6 +84,14 @@
         tokens[position] = NULL;
         return tokens;
     }
+
+    /** LIST OF TODO'S
+     *      @todo lsh_execute_line:
+     *      - this function needs to execute the built-in shell commands (cd, ls, exit, help etc.)
+     *      - it should compare input (maybe use strcmp to do it) to detect a shell command
+     *      - if it detects any, then it should return a shell command function call
+     *          @todo create the built-in shell commands                  
+    **/
 
     int lsh_execute_line() {
 
