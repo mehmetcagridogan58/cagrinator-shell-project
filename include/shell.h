@@ -8,7 +8,7 @@
     char *line;
     char **args;
     int status;
-    int position; // POSITION VAR: its a special variable, position is used througout by the reader and parser.
+
 //
 //    READ FUNCTIOMALITY:
 //    This part of the code should work as:
@@ -18,7 +18,7 @@
 //
     #define LSH_RL_BUFFSIZE 1024
     char *lsh_read_line(void) {
-        position = 0;
+        int position = 0;
         int buffsize = LSH_RL_BUFFSIZE;
         char *buffer = malloc(sizeof(char) * buffsize);
         int c;
@@ -41,7 +41,7 @@
             }
             position++;
 
-            if (position >= buffsize){
+            if (position >= buffsize) {
                 buffer += LSH_RL_BUFFSIZE;
                 buffer = realloc(buffer, buffsize);
             if (!buffer) {
@@ -57,7 +57,7 @@
     #define LSH_TOKEN_BUFFSIZE 64
     #define LSH_TOKEN_DELIM " \t\r\n\a"
     char **lsh_parse_line(char *line) {
-        position = 0;
+        int position = 0;
         int buffsize = LSH_TOKEN_BUFFSIZE;
         char** tokens = malloc(buffsize * sizeof(char*));
         char* token;
@@ -87,13 +87,35 @@
 
     /** LIST OF TODO'S
      *      @todo lsh_execute_line:
-     *      - this function needs to execute the built-in shell commands (cd, ls, exit, help etc.)
-     *      - it should compare input (maybe use strcmp to do it) to detect a shell command
+     *      - this function needs to execute the built-in shell commands (cd, ls, exit, help etc.) // DONE
+     *      - it should compare input (maybe use strcmp to do it) to detect a shell command 
      *      - if it detects any, then it should return a shell command function call
      *          @todo create the built-in shell commands                  
     **/
+    
+    char *builtInCommands[] = {
+        "cd",
+        "ls",
+        "help",
+        "exit",
+    };
 
-    int lsh_execute_line() {
+    int builtInCounter() {
+        return sizeof(builtInCommands) / sizeof(char *);
+    }
+
+    int lsh_execute_line(char **args) {
+        int i;
+
+        if (args[0] == NULL) {
+            return 1;
+        }
+        
+        for (i = 0; i > 3; i++) {
+            if (strcmp(args, builtInCommands[i]) == 0) {
+                return *builtInCommands[i];
+            }
+        }   
 
         return 1;
     }
