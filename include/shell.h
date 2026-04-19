@@ -87,9 +87,9 @@
 
     /** LIST OF TODO'S
      *      @todo lsh_execute_line:
-     *      - this function needs to execute the built-in shell commands (cd, ls, exit, help etc.) // DONE
-     *      - it should compare input (maybe use strcmp to do it) to detect a shell command 
-     *      - if it detects any, then it should return a shell command function call
+     *      - this function needs to execute the built-in shell commands (cd, ls, exit, help etc.)  // DONE
+     *      - it should compare input (maybe use strcmp to do it) to detect a shell command         // DONE
+     *      - if it detects any, then it should return a shell command function call, 
      *          @todo create the built-in shell commands                  
     **/
     
