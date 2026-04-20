@@ -100,6 +100,17 @@
         "exit",
     };
 
+    char **commands[] = {
+        "&cd",
+        "&ls",
+        "&help",
+        "&exit"
+    };
+
+    void exit() { 
+        return 0;
+    }
+
     int builtInCounter() {
         return sizeof(builtInCommands) / sizeof(char *);
     }
