@@ -16,15 +16,15 @@
 //    1-1. if EOF insert \0
 //    2. if input exceeds buffer size reallocate by 1024
 //
-    #define LSH_RL_BUFFSIZE 1024
-    char *lsh_read_line(void) {
+    #define SHELL_RL_BUFFSIZE 1024
+    char *shell_read_line(void) {
         int position = 0;
-        int buffsize = LSH_RL_BUFFSIZE;
+        int buffsize = SHELL_RL_BUFFSIZE;
         char *buffer = malloc(sizeof(char) * buffsize);
         int c;
 
         if(!buffer) {
-            fprintf(stderr, "lsh: allocation error");
+            fprintf(stderr, "shell: allocation error");
             exit(EXIT_FAILURE);
         }
 
@@ -42,10 +42,10 @@
             position++;
 
             if (position >= buffsize) {
-                buffer += LSH_RL_BUFFSIZE;
+                buffer += SHELL_RL_BUFFSIZE;
                 buffer = realloc(buffer, buffsize);
             if (!buffer) {
-                    fprintf(stderr, "lsh: allocation error");
+                    fprintf(stderr, "shell: allocation error");
                     exit(EXIT_FAILURE);
             }    
         }        
@@ -54,32 +54,32 @@
 //
 //      PARSING AND LEXING FUNCTIONALITY
 //      
-    #define LSH_TOKEN_BUFFSIZE 64
-    #define LSH_TOKEN_DELIM " \t\r\n\a"
+    #define SHELL_TOKEN_BUFFSIZE 64
+    #define SHELL_TOKEN_DELIM " \t\r\n\a"
     char **lsh_parse_line(char *line) {
         int position = 0;
-        int buffsize = LSH_TOKEN_BUFFSIZE;
+        int buffsize = SHELL_TOKEN_BUFFSIZE;
         char** tokens = malloc(buffsize * sizeof(char*));
         char* token;
 
         if (!tokens) {
-            fprintf(stderr, "lsh_ allocation error");
+            fprintf(stderr, "shell: allocation error");
             exit(EXIT_FAILURE);
         }
 
-        token = strtok(line, LSH_TOKEN_DELIM);
+        token = strtok(line, SHELL_TOKEN_DELIM);
         while(token =! NULL) {
             tokens[position] = token;
             position++;
             if (position >= buffsize) {
-                buffsize += LSH_TOKEN_BUFFSIZE;
+                buffsize += SHELL_TOKEN_BUFFSIZE;
                 tokens = realloc(tokens, buffsize * sizeof(char*));
                 if (!tokens) {
-                    printf("lsh: allocation error");
+                    printf("shell: allocation error");
                     exit(EXIT_FAILURE);
                 }
             }
-            tokens = strtok(NULL, LSH_TOKEN_DELIM);
+            tokens = strtok(NULL, SHELL_TOKEN_DELIM);
         }
         tokens[position] = NULL;
         return tokens;
@@ -107,7 +107,7 @@
         "&exit"
     };
 
-    void exit() { 
+    int exit(char **args) { 
         return 0;
     }
 
