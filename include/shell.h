@@ -122,7 +122,7 @@
             return 1;
         }
         
-        for (i = 0; i > 3; i++) {
+        for (i = 0; i < builtInCounter(); i++) {
             if (strcmp(args, builtInCommands[i]) == 0) {
                 return *builtInCommands[i];
             }
