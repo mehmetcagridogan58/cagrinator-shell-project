@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-
+#include<unistd.h>  // This is a POSIX (linux) header so i check if my code compiles through WSL
 
     char *line;
     char **args;
@@ -106,6 +106,19 @@
         "&help",
         "&exit"
     };
+    //
+    // DIRECTORY OPERATIONS FUNCTIONS AND VARIABLES
+    //
+    int cd(char **args) {
+        if (args[1] == NULL || "/0") {
+            fprintf(stderr, "shell: directory doesn't exist");
+        }
+            if (chdir(args[1]) == -1) { //chdir returns 0 on success and -1 on failure
+                /** @todo needs to send an error message **/
+            }
+            
+        return 1;
+    }
 
     int exit(char **args) { 
         return 0;
