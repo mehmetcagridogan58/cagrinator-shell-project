@@ -1,13 +1,13 @@
 #include "../include/shell.h"
 
-int lsh_loop() {
+int shell_loop() {
 
     do {
         printf(">");
 
-        line = lsh_read_line();
-        args = lsh_parse_line(line);
-        status = lsh_execute_line(args);
+        line = shell_read_line();
+        args = shell_parse_line(line);
+        status = shell_execute_line(args);
 
         free(line);
         free(args);
