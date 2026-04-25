@@ -4,6 +4,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include<unistd.h>  // This is a POSIX (linux) header so i check if my code compiles through WSL
+#include <sys/wait.h> // Another POSIX header
 
     char *line;
     char **args;
@@ -56,7 +57,7 @@
 //      
     #define SHELL_TOKEN_BUFFSIZE 64
     #define SHELL_TOKEN_DELIM " \t\r\n\a"
-    char **lsh_parse_line(char *line) {
+    char **shell_parse_line(char *line) {
         int position = 0;
         int buffsize = SHELL_TOKEN_BUFFSIZE;
         char** tokens = malloc(buffsize * sizeof(char*));
@@ -84,9 +85,32 @@
         tokens[position] = NULL;
         return tokens;
     }
+    //
+    //      PROCESS MANAGING
+    //
+    int shell_process_maganing(char **args) {
+        pid_t pid, wpid;
+        int status;
+
+        pid = fork();
+        if (wpid == 0) { //manages child process
+            if (execvp(args[0], args) == -1) {
+                perror("Shell error: Couldn't manage process");
+            }
+            exit(EXIT_FAILURE);
+        } else if(wpid < 0) {
+            perror("Shell error: No process to be managed");
+        } else { //manages parent process
+            do
+            {
+                wpid = waitpid(pid, &status, WUNTRACED);
+            } while (!WIFEXITED(status) && !WIFSTATUS(status));   
+        }
+        return 1;
+    }
 
     /** LIST OF TODO'S
-     *      @todo lsh_execute_line:
+     *      @todo shell_execute_line:
      *      - this function needs to execute the built-in shell commands (cd, ls, exit, help etc.)  // DONE
      *      - it should compare input (maybe use strcmp to do it) to detect a shell command         // DONE
      *      - if it detects any, then it should return a shell command function call, 
@@ -109,7 +133,7 @@
     //
     // DIRECTORY OPERATIONS FUNCTIONS AND VARIABLES
     //
-    int cd(char **args) {
+    int cd (char **args) {
         if (args[1] == NULL || "/0") {
             fprintf(stderr, "shell: directory doesn't exist");
         }
@@ -128,7 +152,7 @@
         return sizeof(builtInCommands) / sizeof(char *);
     }
 
-    int lsh_execute_line(char **args) {
+    int shell_execute_line(char **args) {
         int i;
 
         if (args[0] == NULL) {
