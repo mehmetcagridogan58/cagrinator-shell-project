@@ -4,7 +4,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include<unistd.h>  // This is a POSIX (linux) header so i check if my code compiles through WSL
-#include <sys/wait.h> // Another POSIX header
+#include<sys/wait.h> // Another POSIX header
 
     char *line;
     char **args;
@@ -52,7 +52,7 @@
         }        
     }
 }
-//
+//      
 //      PARSING AND LEXING FUNCTIONALITY
 //      
     #define SHELL_TOKEN_BUFFSIZE 64
@@ -88,7 +88,7 @@
     //
     //      PROCESS MANAGING
     //
-    int shell_process_maganing(char **args) {
+    int shell_process_managing(char **args) {
         pid_t pid, wpid;
         int status;
 
