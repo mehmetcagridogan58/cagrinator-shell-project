@@ -1,5 +1,5 @@
 # Cagrinator Shell
-A Unix shell implementation in C exploring process management and system calls.
+A Unix shell implementation in C:
 
 ## Features
 - REPL loop architecture
