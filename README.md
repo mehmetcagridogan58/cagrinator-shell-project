@@ -9,8 +9,7 @@ A Unix shell implementation in C:
 
 ## Technical Details
 - Written in pure C using POSIX system calls
-- Process creation: fork(), execvp()
-- Process synchronization: waitpid()
+- Process synchronization: waitpid
 
 ## Build & Run
 gcc src/main.c -o cagrinator
