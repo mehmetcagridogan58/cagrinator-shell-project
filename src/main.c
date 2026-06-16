@@ -1,6 +1,6 @@
 #include "../include/shell.h"
 
-int shell_loop() {
+void shell_loop() {
 
     do {
         printf(">");
@@ -12,8 +12,6 @@ int shell_loop() {
         free(line);
         free(args);
     } while (status);
-    
-
 }
 
 int main(int argc, char **argv[]) {

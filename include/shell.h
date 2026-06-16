@@ -43,7 +43,7 @@
             position++;
 
             if (position >= buffsize) {
-                buffer += SHELL_RL_BUFFSIZE;
+                buffsize += SHELL_RL_BUFFSIZE;
                 buffer = realloc(buffer, buffsize);
             if (!buffer) {
                     fprintf(stderr, "shell: allocation error");
@@ -124,12 +124,6 @@
         "shell_exit",
     };
 
-    char **commands[] = {
-        "&cd",
-        "&ls",
-        "&help",
-        "&shell_exit"
-    };
     //
     // DIRECTORY OPERATIONS FUNCTIONS AND VARIABLES
     //
@@ -160,7 +154,7 @@
         }
         
         for (i = 0; i < builtInCounter(); i++) {
-            if (strcmp(args, builtInCommands[i]) == 0) {
+            if (strcmp(args[0], builtInCommands[i]) == 0) {
                 return *builtInCommands[i];
             }
         }   
