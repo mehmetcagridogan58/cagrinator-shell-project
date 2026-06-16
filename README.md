@@ -1,12 +1,17 @@
-# cagrinator-shell-project
-It's a small UNIX shell written in C,
+# Cagrinator Shell
+A Unix shell implementation in C exploring process management and system calls.
 
-Building a shell in C involves a R-E-P-L (Read, Evaluate, Print, Loop) that operates with the operating system kernel to manage processes.
+## Features
+- REPL loop architecture
+- Built-in commands: cd, ls, help, exit
+- Process creation and management via fork/exec
+- I/O handling
 
-As of now it has simple input/output process managing. Later on i wish to intoduce threading.
+## Technical Details
+- Written in pure C using POSIX system calls
+- Process creation: fork(), execvp()
+- Process synchronization: waitpid()
 
-BUILT-IN SHELL COMMANDS ARE:
-1)  cd
-2)  ls
-3)  help
-4)  exit
+## Build & Run
+gcc src/main.c -o cagrinator
+./cagrinator
