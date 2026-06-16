@@ -69,7 +69,7 @@
         }
 
         token = strtok(line, SHELL_TOKEN_DELIM);
-        while(token =! NULL) {
+        while(token != NULL) {
             tokens[position] = token;
             position++;
             if (position >= buffsize) {
@@ -80,7 +80,7 @@
                     exit(EXIT_FAILURE);
                 }
             }
-            tokens = strtok(NULL, SHELL_TOKEN_DELIM);
+            token = strtok(NULL, SHELL_TOKEN_DELIM);
         }
         tokens[position] = NULL;
         return tokens;
@@ -93,7 +93,7 @@
         int status;
 
         pid = fork();
-        if (wpid == 0) { //manages child process
+        if (pid == 0) { //manages child process
             if (execvp(args[0], args) == -1) {
                 perror("Shell error: Couldn't manage process");
             }
@@ -104,7 +104,7 @@
             do
             {
                 wpid = waitpid(pid, &status, WUNTRACED);
-            } while (!WIFEXITED(status) && !WIFSTATUS(status));   
+            } while (!WIFEXITED(status) && !WIFSTOPPED(status));   
         }
         return 1;
     }
@@ -121,14 +121,14 @@
         "cd",
         "ls",
         "help",
-        "exit",
+        "shell_exit",
     };
 
     char **commands[] = {
         "&cd",
         "&ls",
         "&help",
-        "&exit"
+        "&shell_exit"
     };
     //
     // DIRECTORY OPERATIONS FUNCTIONS AND VARIABLES
@@ -144,7 +144,7 @@
         return 1;
     }
 
-    int exit(char **args) { 
+    int shell_exit(char **args) { 
         return 0;
     }
 
